@@ -6,7 +6,8 @@
   :dependencies [[org.clojure/clojure "1.8.0"]]
   :main into-curl.core
   :source-paths ["src"]
-  :profiles {:dev {:source-paths ["src" "test"]
-                   :dependencies [[midje/midje "1.9.2"]
-                                  [clj-http/clj-http "3.9.0"]
-                                  [org.clojure/test.check "0.10.0-alpha3"]]}})
+  :profiles {:dev     {:source-paths ["src" "test"]
+                       :dependencies [[midje/midje "1.9.2"]
+                                      [clj-http/clj-http "3.9.0"]
+                                      [org.clojure/test.check "0.10.0-alpha3"]]}
+             :uberjar {:aot :all}})
