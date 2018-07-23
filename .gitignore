@@ -5,4 +5,4 @@ target/
 *.xml
 .lein-failures
 .cpcache/
-
+*.asc
