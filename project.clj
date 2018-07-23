@@ -1,5 +1,7 @@
 (defproject into-curl "0.1.0-SNAPSHOT"
   :description "Print clj-http as a curl."
+  :license {:name "GNU GENERAL PUBLIC LICENSE"
+            :url  "https://www.gnu.org/licenses/gpl-3.0.html"}
   :url "https://github.com/souenzzo/into-curl"
   :dependencies [[org.clojure/clojure "1.8.0"]]
   :main into-curl.core
