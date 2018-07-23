@@ -1,6 +1,11 @@
 (ns into-curl.core
   (:require [clojure.string :as string]))
 
+(def cmap
+  {\$ "\\$"
+   \" "\\\""
+   \\ "\\\\"})
+
 (defmulti argument (fn [k v] k))
 (defmethod argument :default
   [_ _]
@@ -43,9 +48,9 @@
 (defn argument->cli
   [{:keys [option value type]}]
   (case type
-    :short (format "'-%s%s'" option value)
-    :unique (format "'%s'" value)
-    (format "-%s '%s'" option value)))
+    :short (format "\"-%s%s\"" option (string/escape value cmap))
+    :unique (format "\"%s\"" (string/escape value cmap))
+    (format "-%s \"%s\"" option (string/escape value cmap))))
 
 (defn ->curl
   [{:as args}]

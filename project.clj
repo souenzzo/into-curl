@@ -1,4 +1,4 @@
-(defproject into-curl "0.1.0"
+(defproject into-curl "0.2.0-SNAPSHOT"
   :description "Print clj-http as a curl."
   :license {:name "GNU GENERAL PUBLIC LICENSE"
             :url  "https://www.gnu.org/licenses/gpl-3.0.html"}

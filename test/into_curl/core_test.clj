@@ -8,23 +8,31 @@
     "simple get"
     (->curl {:method "GET"
              :url    "http://foo.com"})
-    => "curl 'http://foo.com'")
+    => "curl \"http://foo.com\"")
   (fact
     "get with accept"
     (->curl {:method "GET"
              :accept "application/edn"
              :url    "http://foo.com"})
-    => "curl -H 'Accept: application/edn' 'http://foo.com'")
+    => "curl -H \"Accept: application/edn\" \"http://foo.com\"")
   (fact
     "simple post"
     (->curl {:method "POST"
              :url    "http://foo.com"
              :body   "{\"hello\": 42}"})
-    => "curl '-XPOST' 'http://foo.com' '-d{\"hello\": 42}'")
+    => "curl \"-XPOST\" \"http://foo.com\" \"-d{\\\"hello\\\": 42}\"")
+  (fact
+    "escape"
+    (fact
+      "simple post"
+      (->curl {:method "POST"
+               :url    "http://foo.com/$VAR/\"/'/\\"
+               :body   "{\"hello${INJECT}\": 42}"})
+      => "curl \"-XPOST\" \"http://foo.com/\\$VAR/\\\"/'/\\\\\" \"-d{\\\"hello\\${INJECT}\\\": 42}\""))
   (fact
     "headers"
     (->curl {:method       "GET"
              :headers      {"foo" "bar" "var" "car"}
              :content-type "application/json"
              :url          "http://foo.com"})
-    => "curl -H 'foo: bar' -H 'var: car' -H 'Content-Type: application/json' 'http://foo.com'"))
+    => "curl -H \"foo: bar\" -H \"var: car\" -H \"Content-Type: application/json\" \"http://foo.com\""))
