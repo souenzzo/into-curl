@@ -8,7 +8,7 @@ Latest stable release: `0.2.0`
 ```clojure
 [into-curl "0.2.0"]
 ```
-`deps.end`:
+`deps.edn`:
 ```clojure
 into-curl {:mvn/version "0.2.0"}
 ```
