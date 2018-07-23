@@ -7,7 +7,7 @@
   (fact
     "simple get"
     (->curl {:method "GET"
-             :url    "https://github.com/souenzzo/into-curl"})
+             :url    "http://foo.com"})
     => "curl 'http://foo.com'")
   (fact
     "get with accept"
