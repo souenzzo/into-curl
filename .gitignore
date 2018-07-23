@@ -4,3 +4,5 @@ target/
 .nrepl-port
 *.xml
 .lein-failures
+.cpcache/
+
