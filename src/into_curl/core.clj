@@ -6,6 +6,10 @@
    \" "\\\""
    \\ "\\\\"})
 
+(defn escape
+  [s]
+  (string/escape s cmap))
+
 (defmulti argument (fn [k v] k))
 (defmethod argument :default
   [_ _]
@@ -48,15 +52,20 @@
 (defn argument->cli
   [{:keys [option value type]}]
   (case type
-    :short (format "\"-%s%s\"" option (string/escape value cmap))
-    :unique (format "\"%s\"" (string/escape value cmap))
-    (format "-%s \"%s\"" option (string/escape value cmap))))
+    :short (format "\"-%s%s\"" option (escape value))
+    :unique (format "\"%s\"" (escape value))
+    (format "-%s \"%s\"" option (escape value))))
 
 (defn ->curl
-  [{:as args}]
-  (->> (for [[k v] args
-             :let [result (argument k v)
-                   result (if (map? result) [result] result)]]
-         result)
-       (into ["curl"] (comp cat (map argument->cli) (filter string?)))
-       (string/join " ")))
+  ([{:as args}] (->curl :clj-http.client/request args))
+  ([kind {:as args}]
+   (case kind
+     :clj-http.client/request (->> (for [[k v] args
+                                         :let [result (argument k v)
+                                               result (if (map? result) [result] result)]]
+                                     result)
+                                   (into ["curl"] (comp cat (map argument->cli) (filter string?)))
+                                   (string/join " "))
+     :ring/request (let [{:keys [server-port server-name remote-addr uri scheme protocol headers request-method]} args]
+                     (format "curl %s://%s:%s%s -X%s"
+                             (name scheme) server-name server-port uri (string/upper-case (name request-method)))))))

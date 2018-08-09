@@ -7,7 +7,10 @@
   :main into-curl.core
   :source-paths ["src"]
   :profiles {:dev     {:source-paths ["src" "test"]
-                       :dependencies [[midje/midje "1.9.2"]
+                       :dependencies [[org.clojure/clojure "1.10.0-alpha6"]
                                       [clj-http/clj-http "3.9.0"]
-                                      [org.clojure/test.check "0.10.0-alpha3"]]}
+                                      [midje/midje "1.9.2"]
+                                      [org.clojure/spec.alpha "0.2.168"]
+                                      [org.clojure/test.check "0.10.0-alpha3"]
+                                      [ring/ring-spec "0.0.4"]]}
              :uberjar {:aot :all}})
